@@ -6,29 +6,29 @@
 #include <string>
 #include <vector>
 #include <cstdint>
-
+using namespace std;
 class SocialEngine {
 public:
     SocialEngine();
 
-    bool createUser(const std::string& userId, const std::string& name);
-    bool followUser(const std::string& followerId, const std::string& followeeId);
-    bool userExists(const std::string& userId);
+    bool createUser(const string& userId, const string& name);
+    bool followUser(const string& followerId, const string& followeeId);
+    bool userExists(string& userId);
 
-    int createPost(const std::string& userId, const std::string& text);
+    int createPost(string& userId,string& text);
     bool likePost(int postId);
 
-    std::vector<Post> getPersonalFeed(const std::string& userId, int limit);
+    vector<Post> getPersonalFeed(const string& userId, int limit);
 
 private:
-    BTree<std::string, User> usersById;
+    BTree<string, User> usersById;
     BTree<int, Post> postsById;
-    BTree<std::string, std::vector<int>> postsByUser;
+    BTree<string, vector<int>> postsByUser;
 
     int nextPostId;
 
-    double computeScore(const Post& p, std::int64_t now);
-    std::int64_t getCurrentTime();
+    double computeScore(const Post& p, int64_t now);
+    int64_t getCurrentTime();
 };
 
 #endif
