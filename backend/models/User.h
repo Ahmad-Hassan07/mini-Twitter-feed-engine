@@ -14,7 +14,7 @@ struct User{
     int64_t createdAt;
 
     static string serialize(const User& u){
-        return to_string(u.userId)+"|"+u.username+"|"+u.displaName+ "|" +u.bio + "|" + (u.isPrivate ? "1" : "0") + "|" + u.salt + "|" +u.passHash + "|" + to_string(u.createdAt);
+        return to_string(u.userId)+"|"+u.username+"|"+u.displayName+ "|" +u.bio + "|" + (u.isPrivate ? "1" : "0") + "|" + u.salt + "|" +u.passHash + "|" + to_string(u.createdAt);
     }
 
     static bool deserialize(const string &s,User &u){

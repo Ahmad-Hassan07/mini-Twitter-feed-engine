@@ -38,3 +38,19 @@ string invScoreKey(int t) {
     return FixedInt(inver, 10);
 }
 
+string nextLex(const string &pre) {
+    if (pre.empty()) {
+        return "~";
+    }
+    string s = pre;
+    int i = (int)s.size() - 1;
+    while (i >= 0) {
+        unsigned char c = (unsigned char)s[i];
+        if (c < 126) {
+            s[i] = char(c + 1);
+            return s;
+        }
+        i--;
+    }
+    return pre + char(0);
+}

@@ -75,76 +75,76 @@ public:
 
     }
 
-    string DataStore::kPostUserTime(int64_t authorId, int64_t timestamp, int64_t postId) {
+    string kPostUserTime(int64_t authorId, int64_t timestamp, int64_t postId) {
         return "PUT:" + FixedInt(authorId, 20) + ":" + invTimeKey(timestamp) + ":" + FixedInt(postId, 20);
 
     }
 
-    string DataStore::kFollowFF(int64_t followerId, int64_t followeeId) {
+    string kFollowFF(int64_t followerId, int64_t followeeId) {
         return "FF:" + FixedInt(followerId, 20) + ":" + FixedInt(followeeId, 20);
 
     }
 
-    
-    string DataStore::kFollowFE(int64_t followeeId, int64_t followerId) {
+
+    string kFollowFE(int64_t followeeId, int64_t followerId) {
         return "FE:" + FixedInt(followeeId, 20) + ":" + FixedInt(followerId, 20);
 
     }
 
-    string DataStore::kReqToTime(int64_t toUserId, int64_t timestamp, int64_t reqId) {
+    string kReqToTime(int64_t toUserId, int64_t timestamp, int64_t reqId) {
         return "FRTO:" + FixedInt(toUserId, 20) + ":" + FixedInt(timestamp, 20) + ":" + FixedInt(reqId, 20);
 
     }
 
-    string DataStore::kReqFromTo(int64_t fromUserId, int64_t toUserId) {
+    string kReqFromTo(int64_t fromUserId, int64_t toUserId) {
         return "FRFT:" + FixedInt(fromUserId, 20) + ":" + FixedInt(toUserId, 20);
 
     }
 
-    string DataStore::kLike(int64_t userId, int64_t postId) {
+    string kLike(int64_t userId, int64_t postId) {
         return "L:" + FixedInt(userId, 20) + ":" + FixedInt(postId, 20);
 
     }
-    string DataStore::kRepost(int64_t userId, int64_t postId) {
+    string kRepost(int64_t userId, int64_t postId) {
         return "R:" + FixedInt(userId, 20) + ":" + FixedInt(postId, 20);
 
     }
-    string DataStore::kCommentId(int64_t commentId) {
+    string kCommentId(int64_t commentId) {
         return "C:" + FixedInt(commentId, 20);
 
     }
 
-    string DataStore::kCommentPostTime(int64_t postId, int64_t timestamp, int64_t commentId) {
+    string kCommentPostTime(int64_t postId, int64_t timestamp, int64_t commentId) {
         return "CPT:" + FixedInt(postId, 20) + ":" + FixedInt(timestamp, 20) + ":" + FixedInt(commentId, 20);
 
     }
 
 
-    string DataStore::kHashtagRank(const string &tag, int score, int64_t timestamp, int64_t postId) {
+    string kHashtagRank(const string &tag, int score, int64_t timestamp, int64_t postId) {
         return "HT:" + tag + ":" + invScoreKey(score) + ":" + invTimeKey(timestamp) + ":" + FixedInt(postId, 20);
 
     }
 
-    string DataStore::kPublicTrend(int trendScore, int64_t timestamp, int64_t postId) {
+    string kPublicTrend(int trendScore, int64_t timestamp, int64_t postId) {
         return "TR:" + invScoreKey(trendScore) + ":" + invTimeKey(timestamp) + ":" + FixedInt(postId, 20);
 
     }
-    string DataStore::kThreadNodeId(int64_t nodeId) {
+    string kThreadNodeId(int64_t nodeId) {
         return "TN:" + FixedInt(nodeId, 20);
 
     }
 
-    string DataStore::kThreadChild(int64_t parentNodeId, int64_t timestamp, int64_t childNodeId) {
+    string kThreadChild(int64_t parentNodeId, int64_t timestamp, int64_t childNodeId) {
         return "TC:" + FixedInt(parentNodeId, 20) + ":" + FixedInt(timestamp, 20) + ":" + FixedInt(childNodeId, 20);
 
     }
 
-    string DataStore::kThreadMeta(int64_t rootId) {
+    string kThreadMeta(int64_t rootId) {
         return "TM:" + FixedInt(rootId, 20);
 
     }
 
-    string DataStore::kThreadPopularity(int threadScore, int64_t lastUpdated, int64_t rootId) {
+    string kThreadPopularity(int threadScore, int64_t lastUpdated, int64_t rootId) {
         return "TP:" + invScoreKey(threadScore) + ":" + invTimeKey(lastUpdated) + ":" + FixedInt(rootId, 20);
 
     }
