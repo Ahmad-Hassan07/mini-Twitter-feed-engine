@@ -1,4 +1,4 @@
-#include "storage/BPlusTree.h"
+#include "BPlusTree.h"
 #include <fstream>
 #include <cstring>
 

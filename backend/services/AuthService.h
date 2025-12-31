@@ -1,6 +1,6 @@
 #pragma once
-#include "core/DataStore.h"
-#include "models/User.h"
+#include "../core/DataStore.h"
+#include "../models/User.h"
 #include<iostream>
 #include <ctime>
 #include <cstdlib>
@@ -79,12 +79,16 @@ public:
     }
     int login(const string &username,const string &password,int64_t &INuserId)
     {
+        //cout<<"-1";
         INuserId=-67;
         if(db->usersByUsername.get(db->kUsername(username),INuserId)){
+            //cout<<"-2";
             User u;
             if(getUserById(INuserId,u)){
+                //cout<<"-3";
                 string h = hashPassword(password,u.salt);
                 if(h == u.passHash){
+                    //cout<<"-3";
                     return 0;//login successful
                 }
                 return 3;// wrong password
@@ -96,7 +100,7 @@ public:
         
         
     }
-    /*
+    
     bool getUserByUsername(const string &username, User &out) {
         int64_t userId = -67;
         if (!db->usersByUsername.get(db->kUsername(username), userId)) {
@@ -106,6 +110,6 @@ public:
 
         return getUserById(userId, out);
     }
-*/
+
 };
 

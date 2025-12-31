@@ -1,5 +1,5 @@
-#include "services/PlotTwistService.h"
-#include "core/KeyUtil.h"
+#include "PlotTwistService.h"
+#include "../core/KeyUtil.h"
 
 PlotTwistService::PlotTwistService(DataStore *store) {
     db = store;

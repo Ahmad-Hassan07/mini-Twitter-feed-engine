@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "core/DataStore.h"
-#include "models/User.h"
-#include "models/Post.h"
+#include "../core/DataStore.h"
+#include "../models/User.h"
+#include "../models/Post.h"
 
 class SearchService {
 private:

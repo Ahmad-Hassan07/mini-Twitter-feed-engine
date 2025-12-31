@@ -2,9 +2,9 @@
 #include <vector>
 #include <cstdint>
 #include <string>
-#include "core/DataStore.h"
-#include "models/ThreadNode.h"
-#include "models/ThreadMeta.h"
+#include "../core/DataStore.h"
+#include "../models/ThreadNode.h"
+#include "../models/ThreadMeta.h"
 
 class PlotTwistService {
 private:

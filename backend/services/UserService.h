@@ -1,7 +1,7 @@
 #pragma once
-#include "core/DataStore.h"
-#include "models/FollowRequest.h"
-#include "core/KeyUtil.h"
+#include "../core/DataStore.h"
+#include "../models/FollowRequest.h"
+#include "../core/KeyUtil.h"
 #include<vector>
 using namespace std;
 

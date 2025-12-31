@@ -1,5 +1,5 @@
-#include "services/SearchService.h"
-#include "core/KeyUtil.h"
+#include "SearchService.h"
+#include "../core/KeyUtil.h"
 
 SearchService::SearchService(DataStore *store) {
     db = store;

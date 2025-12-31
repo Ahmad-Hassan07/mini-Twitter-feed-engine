@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 #include <cstdint>
-#include "core/DataStore.h"
+#include "../core/DataStore.h"
 
-#include "core/KeyUtil.h"
+#include "../core/KeyUtil.h"
 #include <queue>
 
-#include "models/Post.h"
+#include "../models/Post.h"
 struct HeapItem {
     int64_t postId;
     int64_t timestamp;  
@@ -30,7 +30,7 @@ public:
 
     }
 
-    vector<Post> FeedService::homeFeed(int64_t userId, int limit) {
+    vector<Post> homeFeed(int64_t userId, int limit) {
         vector<Post> out;
 
 

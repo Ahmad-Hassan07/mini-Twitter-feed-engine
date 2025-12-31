@@ -1,4 +1,5 @@
-#pragma once
+#ifndef KEYUTIL
+#define KEYUTIL
 #include<cstdint>
 #include<chrono>
 #include<string>
@@ -9,7 +10,6 @@ int64_t nowUnixSeconds(){
     return chrono::duration_cast<chrono::seconds>(chrono::system_clock::now().time_since_epoch()).count();
 
 }
-
 string FixedInt(int64_t num,int width){
     string s= to_string(num);
     while(s.size()<width){
@@ -90,6 +90,15 @@ string joinCsv(const vector<string> &items) {
 
 
 }
+string toLowerSimple2(string s) {
+    for (int i = 0; i < (int)s.size(); i++) {
+        if (s[i] >= 'A' && s[i] <= 'Z') 
+        s[i] = char(s[i] - 'A' + 'a');
+
+
+    }
+    return s;
+}
 
 vector<string> parseHashtagsSimple(const string &text) {
     vector<string> tags;
@@ -132,15 +141,7 @@ vector<string> parseHashtagsSimple(const string &text) {
     }
     return tags;
 }
-string toLowerSimple2(string s) {
-    for (int i = 0; i < (int)s.size(); i++) {
-        if (s[i] >= 'A' && s[i] <= 'Z') 
-        s[i] = char(s[i] - 'A' + 'a');
-
-
-    }
-    return s;
-}
+#endif
 
 /*
 

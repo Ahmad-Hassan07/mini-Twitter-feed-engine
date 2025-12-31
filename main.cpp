@@ -2,13 +2,13 @@
 #include <string>
 #include <vector>
 
-#include "core/DataStore.h"
-#include "services/AuthService.h"
-#include "services/UserService.h"
-#include "services/PostService.h"
-#include "services/FeedService.h"
-#include "services/SearchService.h"
-#include "services/PlotTwistService.h"
+#include "backend/core/DataStore.h"
+#include "backend/services/AuthService.h"
+#include "backend/services/UserService.h"
+#include "backend/services/PostService.cpp"
+#include "backend/services/FeedService.h"
+#include "backend/services/SearchService.cpp"
+#include "backend/services/PlotTwistService.cpp"
 
 using namespace std;
 
@@ -52,16 +52,17 @@ int main() {
         if (choice == 0) break;
 
         if (choice == 1) {
-            string u, p, dn, bio;
+            string u, p, dn, age, bio;
             int priv;
             cout << "username: "; getline(cin, u);
             cout << "password: "; getline(cin, p);
             cout << "displayName: "; getline(cin, dn);
+            cout<<"age: ";getline(cin,age);
             cout << "bio: "; getline(cin, bio);
             cout << "isPrivate (1/0): "; cin >> priv; cin.ignore();
 
             int64_t uid;
-            bool ok = auth.signup(u, p, dn, bio, (priv==1), uid);
+            bool ok = !(auth.signup(u, p, dn,stoi(age), bio, (priv==1), uid));
             if (ok) cout << "Signup ok, userId=" << uid << "\n";
             else cout << "Signup failed (username exists)\n";
         }
@@ -73,7 +74,7 @@ int main() {
 
             int64_t uid;
             bool ok = auth.login(u, p, uid);
-            if (ok) {
+            if (!ok) {
                 currentUser = uid;
                 cout << "Login ok, userId=" << currentUser << "\n";
             } else {

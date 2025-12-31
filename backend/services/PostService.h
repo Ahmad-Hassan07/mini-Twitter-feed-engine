@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
-#include "core/DataStore.h"
-#include "models/Post.h"
+#include "../core/DataStore.h"
+#include "../models/Post.h"
 
-#include "models/Comments.h"
+#include "../models/Comments.h"
 using namespace std;
 class PostService {
     DataStore *db;

@@ -1,5 +1,5 @@
-#include "services/PostService.h"
-#include "core/KeyUtil.h"
+#include "PostService.h"
+#include "../core/KeyUtil.h"
 
 PostService::PostService(DataStore *store) {
     db = store;
@@ -238,5 +238,5 @@ vector<Comment> PostService::listComments(int64_t postId, int limit) {
 
 bool PostService::getPost(int64_t postId, Post &out) {
     return loadPost(postId, out);
-    
+
 }

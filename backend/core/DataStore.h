@@ -1,9 +1,9 @@
 #pragma once
 #include <string>
-#include "storage/RecordFile.h"
-#include "storage/BPlusTree.h"
-#include "storage/IdGenerator.h"
-#include "core/KeyUtil.h"
+#include "../storage/RecordFile.cpp"
+#include "../storage/BPlusTree.cpp"
+#include "../storage/IdGenerator.h"
+#include "KeyUtil.h"
 class DataStore{
 public:
     IdGenerator ids;
