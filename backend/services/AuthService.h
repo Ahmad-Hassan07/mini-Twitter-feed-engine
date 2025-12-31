@@ -1,13 +1,17 @@
 #pragma once
 #include "core/DataStore.h"
 #include "models/User.h"
+#include<iostream>
+#include <ctime>
+#include <cstdlib>
+#include <functional>
 using namespace std;
 class AuthService{
     DataStore *db;
 
 public:
-    AuthService(DataStore* db){
-        db = this->db;
+    AuthService(DataStore* dbb){
+        this->db = dbb;
         std::srand(std::time(0));
     }
     string salt(){
@@ -30,16 +34,19 @@ public:
 
     int signup(const string &username,const string &password,const string& displayName,const int& age,const string &bio, bool isPrivate,int64_t &UserID){
         int64_t x=-67;
+        //cout<<"-1";
         //if i return something other than 0 it means signup is not successfull
         ;// 1 means underage
         ;// 2 means username already exists
         if(age<16){
             return 1;// 1 means underage
         }
+        //cout<<"-2";
         if(db->usersByUsername.get(db->kUsername(username),x)){
+           // cout<<"-hhuihi";
             return 2;
         }
-
+        //cout<<"-3";
         User u;
         u.userId= db->ids.newUserId();
         u.username = username;
@@ -51,10 +58,11 @@ public:
         u.passHash = hashPassword(password, u.salt);
         string rec = u.serialize(u);
         int64_t offset = db->usersR.appendRecord(rec);
-
+        //cout<<"-6";
         db->usersById.put(db->kUserId(u.userId), offset);
         db->usersByUsername.put(db->kUsername(username), u.userId);
         UserID=u.userId;
+        //cout<<"-5";
         return 0;
 
     }
@@ -69,9 +77,9 @@ public:
         }
         return false;
     }
-    int login(const string &username,const string &password,int64_t &INuserId=-67)
+    int login(const string &username,const string &password,int64_t &INuserId)
     {
-
+        INuserId=-67;
         if(db->usersByUsername.get(db->kUsername(username),INuserId)){
             User u;
             if(getUserById(INuserId,u)){
