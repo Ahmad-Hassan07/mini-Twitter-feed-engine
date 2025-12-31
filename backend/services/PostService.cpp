@@ -92,12 +92,11 @@ int64_t PostService::createPost(int64_t authorId, bool authorIsPrivate, const st
     p.comments = 0;
     p.isDeleted = false;
 
-    int64_t offset = db->postsRF.appendRecord(Post::serialize(p));
+    int64_t offset = db->postsR.appendRecord(Post::serialize(p));
 
     db->postsById.put(db->kPostId(p.postId), offset);
     db->postsByUserTime.put(db->kPostUserTime(p.authorId, p.timestamp, p.postId), p.postId);
 
-    // hashtag + trend indexes
     addHashtagIndexEntries(p);
     addTrendIndexEntry(p);
 
@@ -106,21 +105,27 @@ int64_t PostService::createPost(int64_t authorId, bool authorIsPrivate, const st
 
 bool PostService::likeToggle(int64_t userId, int64_t postId) {
     Post p;
-    if (!loadPost(postId, p)) return false;
-    if (p.isDeleted) return false;
-
+    if (!loadPost(postId, p)) {
+        return false;
+    }
+    if (p.isDeleted) {
+        return false;
+    }
     string lk = db->kLike(userId, postId);
-    int64_t dummy = -1;
+    int64_t d = -67;
 
     removeHashtagIndexEntries(p);
     removeTrendIndexEntry(p);
 
-    if (db->likesByUserPost.get(lk, dummy)) {
-        // unlike
+    if (db->likesByUserPost.get(lk, d)) {
+
         db->likesByUserPost.erase(lk);
-        if (p.likes > 0) p.likes--;
+        if (p.likes > 0) {
+            p.likes--;
+
+        }
     } else {
-        // like
+
         db->likesByUserPost.put(lk, 1);
         p.likes++;
     }
@@ -139,12 +144,12 @@ bool PostService::repostToggle(int64_t userId, int64_t postId) {
     if (p.isDeleted) return false;
 
     string rk = db->kRepost(userId, postId);
-    int64_t dummy = -1;
+    int64_t d = -67;
 
     removeHashtagIndexEntries(p);
     removeTrendIndexEntry(p);
 
-    if (db->repostsByUserPost.get(rk, dummy)) {
+    if (db->repostsByUserPost.get(rk, d)) {
         db->repostsByUserPost.erase(rk);
         if (p.reposts > 0) p.reposts--;
     } else {
@@ -162,22 +167,30 @@ bool PostService::repostToggle(int64_t userId, int64_t postId) {
 
 int64_t PostService::addComment(int64_t userId, int64_t postId, const string &text) {
     Post p;
-    if (!loadPost(postId, p)) return -1;
-    if (p.isDeleted) return -1;
+    if (!loadPost(postId, p)) {
+        return -67;
+    }
+    if (p.isDeleted) {
+        return -67;
+
+    }
 
     Comment c;
     c.commentId = db->ids.newCommentId();
     c.postId = postId;
     c.authorId = userId;
-    c.timestamp = nowUnixSecondsSimple();
+    c.timestamp = nowUnixSeconds();
+
+
     c.text = text;
 
-    int64_t offset = db->commentsRF.appendRecord(Comment::serialize(c));
+    int64_t offset = db->commentsR.appendRecord(Comment::serialize(c));
 
     db->commentsById.put(db->kCommentId(c.commentId), offset);
+
+
     db->commentsByPostTime.put(db->kCommentPostTime(postId, c.timestamp, c.commentId), c.commentId);
 
-    // update post engagement + indexes
     removeHashtagIndexEntries(p);
     removeTrendIndexEntry(p);
 
@@ -193,7 +206,8 @@ int64_t PostService::addComment(int64_t userId, int64_t postId, const string &te
 vector<Comment> PostService::listComments(int64_t postId, int limit) {
     vector<Comment> out;
 
-    string prefix = "CPT:" + padInt(postId, 20) + ":";
+    string prefix = "CPT:" + FixedInt(postId, 20) + ":";
+
     string end = nextLex(prefix);
 
     vector<BPlusTree::KV> rows = db->commentsByPostTime.rangeScan(prefix, end, limit);
@@ -202,13 +216,21 @@ vector<Comment> PostService::listComments(int64_t postId, int limit) {
         int64_t commentId = rows[i].value;
 
         int64_t offset = -1;
+
         if (db->commentsById.get(db->kCommentId(commentId), offset)) {
             string rec;
-            if (db->commentsRF.readRecord(offset, rec)) {
+
+            if (db->commentsR.readRecord(offset, rec)) {
                 Comment c;
-                if (Comment::deserialize(rec, c)) out.push_back(c);
+
+                if (Comment::deserialize(rec, c)){
+                    out.push_back(c);
+
+                } 
             }
+
         }
+
     }
 
     return out;
@@ -216,4 +238,5 @@ vector<Comment> PostService::listComments(int64_t postId, int limit) {
 
 bool PostService::getPost(int64_t postId, Post &out) {
     return loadPost(postId, out);
+    
 }
